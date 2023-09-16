@@ -31,16 +31,25 @@ document.addEventListener("DOMContentLoaded", async function () {
             localStorage.setItem("token", token);
             localStorage.setItem("user", user.name);
             window.location.href = "home.html";
+          } else {
+            res = await response.json();
+            displayFlashMessage(res["msg"]);
           }
         })
         .catch(function (error) {
           console.error("Error posting data:", error);
         });
     });
-
-  // fetch("https://sevenambola.onrender.com/quotes", {
-  //     method:
-  // });
 });
-// console.log(localStorage.getItem("user"));
-// document.getElementById("data").innerHTML = localStorage.getItem("user");
+
+function displayFlashMessage(message) {
+  var flashContainer = document.getElementById("flashContainer");
+  var flashMessage = document.createElement("div");
+  flashMessage.classList.add("flash-message");
+  flashMessage.textContent = message;
+  flashContainer.appendChild(flashMessage);
+
+  setTimeout(function () {
+    flashContainer.removeChild(flashMessage);
+  }, 3000);
+}

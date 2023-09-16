@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       const con_password = document.getElementById("con_password").value;
 
       if (password != con_password) {
-        alert("passwords doesn't match");
+        displayFlashMessage("passwords doesn't match");
       } else {
         var data = {
           name: name,
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               window.location.href = "otp.html";
             }
             res = await response.json();
-            console.log(res);
+            displayFlashMessage(res["msg"]);
           })
           .catch(function (error) {
             console.log("Error posting data:", error);
@@ -47,3 +47,15 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     });
 });
+
+function displayFlashMessage(message) {
+  var flashContainer = document.getElementById("flashContainer");
+  var flashMessage = document.createElement("div");
+  flashMessage.classList.add("flash-message");
+  flashMessage.textContent = message;
+  flashContainer.appendChild(flashMessage);
+
+  setTimeout(function () {
+    flashContainer.removeChild(flashMessage);
+  }, 3000);
+}
